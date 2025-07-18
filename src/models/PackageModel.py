@@ -35,19 +35,12 @@ class OutputDetections(Output):
 class RecognitionInputs(Inputs):
     inputImage: InputImage
 
-
-class RecognitionConfigs(Configs):
-    pass
-
-
 class RecognitionOutputs(Outputs):
     outputDetections: OutputDetections
 
 
 class RecognitionRequest(Request):
     inputs: Optional[RecognitionInputs]
-    configs: RecognitionConfigs
-
     class Config:
         json_schema_extra = {
             "target": "configs"
