@@ -147,4 +147,4 @@ class PackageConfigs(Configs):
 class PackageModel(Package):
     configs: PackageConfigs
     type: Literal["component"] = "component"
-    name: Literal["EdgeExample"] = "EdgeExample"
+    name: Literal["TrafficSignRecognitionExample"] = "TrafficSignRecognitionExample"
