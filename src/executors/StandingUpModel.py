@@ -1,7 +1,3 @@
-"""
-    It is one of the preprocessing components in which the image is rotated.
-"""
-
 import os
 import cv2
 import sys
@@ -15,7 +11,7 @@ from components.StandingUpModel.src.utils.response import build_response
 from components.StandingUpModel.src.models.PackageModel import PackageModel
 from components.StandingUpModel.src.utils.utils import load_models
 
-class Recognition(Component):
+class StandingUpModel(Component):
     def __init__(self, request, bootstrap):
         super().__init__(request, bootstrap)
         self.request.model = PackageModel(**(self.request.data))
@@ -24,8 +20,8 @@ class Recognition(Component):
     @staticmethod
     def bootstrap(config: dict) -> dict:
         model = load_models()
-        print("Model loaded successfully")
-        return {"model":model}
+        print("Model loaded successfully")  
+        return {"model" : model}
 
     def recognition(self, image):
             return image
