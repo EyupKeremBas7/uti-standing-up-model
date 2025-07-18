@@ -30,13 +30,9 @@ class OutputDetections(Output):
     class Config:
         title = "Detections"
 
-
-
 class RecognitionInputs(Inputs):
     inputImage: InputImage
 
-class RecognitionOutputs(Outputs):
-    outputDetections: OutputDetections
 
 
 class RecognitionRequest(Request):
@@ -46,12 +42,15 @@ class RecognitionRequest(Request):
             "target": "configs"
         }
 
+class RecognitionOutputs(Outputs):
+    outputDetections: OutputDetections
+
 
 class RecognitionResponse(Response):
     outputs: RecognitionOutputs
 
 
-class Recognition(Config):
+class RecognitionExecutor(Config):
     name: Literal["Recognition"] = "Recognition"
     value: Union[RecognitionRequest, RecognitionResponse]
     type: Literal["object"] = "object"
@@ -68,7 +67,7 @@ class Recognition(Config):
 
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
-    value: Union[Recognition]
+    value: RecognitionExecutor
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
 
