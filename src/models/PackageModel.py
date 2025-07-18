@@ -30,35 +30,27 @@ class OutputDetections(Output):
     class Config:
         title = "Detections"
 
-
-
 class RecognitionInputs(Inputs):
     inputImage: InputImage
 
 
-class RecognitionConfigs(Configs):
-    pass
-
-
-class RecognitionOutputs(Outputs):
-    outputDetections: OutputDetections
-
 
 class RecognitionRequest(Request):
     inputs: Optional[RecognitionInputs]
-    configs: RecognitionConfigs
-
     class Config:
         json_schema_extra = {
             "target": "configs"
         }
+
+class RecognitionOutputs(Outputs):
+    outputDetections: OutputDetections
 
 
 class RecognitionResponse(Response):
     outputs: RecognitionOutputs
 
 
-class Recognition(Config):
+class RecognitionExecutor(Config):
     name: Literal["Recognition"] = "Recognition"
     value: Union[RecognitionRequest, RecognitionResponse]
     type: Literal["object"] = "object"
@@ -75,7 +67,7 @@ class Recognition(Config):
 
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
-    value: Union[Recognition]
+    value: RecognitionExecutor
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
 
