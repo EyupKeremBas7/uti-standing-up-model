@@ -1,7 +1,6 @@
-from pydantic import validator
+from pydantic import Field, validator
 from typing import List, Optional, Union, Literal
-from sdks.novavision.src.base.model import Detection, Package, Inputs, Configs, Outputs, Response, Request, Output, Input, Config,Image
-
+from sdks.novavision.src.base.model import Package, Image, Inputs, Configs, Outputs, Response, Request, Output, Input, Config, Detection
 
 class InputImage(Input):
     name: Literal["inputImage"] = "inputImage"
@@ -9,65 +8,66 @@ class InputImage(Input):
     type: str = "object"
 
     @validator("type", pre=True, always=True)
-    def set_type_based_on_value(cls, value, values):
-        value = values.get('value')
-        if isinstance(value, Image):
+    def set_type_based_on_value(cls, v, values):
+        field_value = values.get('value')
+        if isinstance(field_value, Image):
             return "object"
-        elif isinstance(value, list):
+        elif isinstance(field_value, list):
             return "list"
+        return v
 
     class Config:
         title = "Image"
 
-class Detection(Detection):
+class CustomDetection(Detection):
     imgUID: str
 
 class OutputDetections(Output):
     name: Literal["outputDetections"] = "outputDetections"
-    value: List[Detection]
+    value: List[CustomDetection]
     type: Literal["list"] = "list"
 
     class Config:
         title = "Detections"
 
-class RecognitionInputs(Inputs):
+class StandingUpModelExecutorInputs(Inputs):
     inputImage: InputImage
 
+class StandingUpModelExecutorConfigs(Configs):
+    pass
 
+class StandingUpModelExecutorRequest(Request):
+    inputs: Optional[StandingUpModelExecutorInputs]
+    configs: Optional[StandingUpModelExecutorConfigs]
 
-class RecognitionRequest(Request):
-    inputs: Optional[RecognitionInputs]
     class Config:
         json_schema_extra = {
             "target": "configs"
         }
 
-class RecognitionOutputs(Outputs):
+class StandingUpModelExecutorOutputs(Outputs):
     outputDetections: OutputDetections
 
+class StandingUpModelExecutorResponse(Response):
+    outputs: StandingUpModelExecutorOutputs
 
-class RecognitionResponse(Response):
-    outputs: RecognitionOutputs
-
-
-class RecognitionExecutor(Config):
-    name: Literal["Recognition"] = "Recognition"
-    value: Union[RecognitionRequest, RecognitionResponse]
+class StandingUpModelExecutor(Config):
+    name: Literal["StandingUpModelExecutor"] = "StandingUpModelExecutor"
+    value: Union[StandingUpModelExecutorRequest, StandingUpModelExecutorResponse]
     type: Literal["object"] = "object"
     field: Literal["option"] = "option"
 
     class Config:
-        title = "Recognition"
+        title = "Standing Up Model"
         json_schema_extra = {
             "target": {
                 "value": 0
             }
         }
 
-
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
-    value: RecognitionExecutor
+    value: StandingUpModelExecutor
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
 
@@ -77,10 +77,8 @@ class ConfigExecutor(Config):
             "target": "value"
         }
 
-
 class PackageConfigs(Configs):
     executor: ConfigExecutor
-
 
 class PackageModel(Package):
     configs: PackageConfigs
