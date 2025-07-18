@@ -59,13 +59,13 @@ class RecognitionResponse(Response):
 
 
 class Recognition(Config):
-    name: Literal["StandingUpModel"] = "StandingUpModel"
+    name: Literal["Recognition"] = "Recognition"
     value: Union[RecognitionRequest, RecognitionResponse]
     type: Literal["object"] = "object"
     field: Literal["option"] = "option"
 
     class Config:
-        title = "StandingUpModel"
+        title = "Recognition"
         json_schema_extra = {
             "target": {
                 "value": 0

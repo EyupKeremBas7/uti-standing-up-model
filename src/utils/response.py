@@ -1,13 +1,12 @@
-
 from sdks.novavision.src.helper.package import PackageHelper
-from components.Package.src.models.PackageModel import PackageModel, PackageConfigs, ConfigExecutor, PackageOutputs, PackageResponse, PackageExecutor, OutputImage
+from components.StandingUpModel.src.models.PackageModel import PackageModel, PackageConfigs, ConfigExecutor, Recognition, RecognitionConfigs, RecognitionInputs, RecognitionOutputs, RecognitionRequest, RecognitionResponse, OutputDetections
 
 
 def build_response(context):
-    outputImage = OutputImage(value=context.image)
-    Outputs = PackageOutputs(outputImage=outputImage)
-    packageResponse = PackageResponse(outputs=Outputs)
-    packageExecutor = PackageExecutor(value=packageResponse)
+    outputDetections = OutputDetections(value=context.image)
+    outputs = RecognitionOutputs(outputDetections=outputDetections)
+    packageResponse = RecognitionResponse(outputs=outputs)
+    packageExecutor = Recognition(value=packageResponse)
     executor = ConfigExecutor(value=packageExecutor)
     packageConfigs = PackageConfigs(executor=executor)
     package = PackageHelper(packageModel=PackageModel, packageConfigs=packageConfigs)
