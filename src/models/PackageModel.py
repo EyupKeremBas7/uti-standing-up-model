@@ -51,7 +51,7 @@ class StandingUpModelExecutorResponse(Response):
     outputs: StandingUpModelExecutorOutputs
 
 class StandingUpModelExecutor(Config):
-    name: Literal["StandingUpModelExecutor"] = "StandingUpModelExecutor"
+    name: Literal["StandingUpModel"] = "StandingUpModel"
     value: Union[StandingUpModelExecutorRequest, StandingUpModelExecutorResponse]
     type: Literal["object"] = "object"
     field: Literal["option"] = "option"
@@ -66,7 +66,7 @@ class StandingUpModelExecutor(Config):
 
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
-    value: StandingUpModelExecutor
+    value: StandingUpModel
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
 
