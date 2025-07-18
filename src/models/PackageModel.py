@@ -29,30 +29,30 @@ class OutputDetections(Output):
     class Config:
         title = "Detections"
 
-class StandingUpModelExecutorInputs(Inputs):
+class StandingUpModelInputs(Inputs):
     inputImage: InputImage
 
-class StandingUpModelExecutorConfigs(Configs):
+class StandingUpModelConfigs(Configs):
     pass
 
-class StandingUpModelExecutorRequest(Request):
-    inputs: Optional[StandingUpModelExecutorInputs]
-    configs: Optional[StandingUpModelExecutorConfigs]
+class StandingUpModelRequest(Request):
+    inputs: Optional[StandingUpModelInputs]
+    configs: Optional[StandingUpModelConfigs]
 
     class Config:
         json_schema_extra = {
             "target": "configs"
         }
 
-class StandingUpModelExecutorOutputs(Outputs):
+class StandingUpModelOutputs(Outputs):
     outputDetections: OutputDetections
 
-class StandingUpModelExecutorResponse(Response):
-    outputs: StandingUpModelExecutorOutputs
+class StandingUpModelResponse(Response):
+    outputs: StandingUpModelOutputs
 
-class StandingUpModelExecutor(Config):
-    name: Literal["StandingUpModelExecutor"] = "StandingUpModelExecutor"
-    value: Union[StandingUpModelExecutorRequest, StandingUpModelExecutorResponse]
+class StandingUpModel(Config):
+    name: Literal["StandingUpModel"] = "StandingUpModel"
+    value: Union[StandingUpModelRequest, StandingUpModelResponse]
     type: Literal["object"] = "object"
     field: Literal["option"] = "option"
 
@@ -66,7 +66,7 @@ class StandingUpModelExecutor(Config):
 
 class ConfigExecutor(Config):
     name: Literal["ConfigExecutor"] = "ConfigExecutor"
-    value: StandingUpModelExecutor
+    value: StandingUpModel
     type: Literal["executor"] = "executor"
     field: Literal["dependentDropdownlist"] = "dependentDropdownlist"
 
