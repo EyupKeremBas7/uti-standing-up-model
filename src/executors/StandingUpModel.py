@@ -32,25 +32,16 @@ class StandingUpModel(Component):
         model = self.bootstrap_data.get("model", None)
         if model is None:
             raise ValueError("Model is not loaded in bootstrap data")
-
-        # Inference işlemi (örnek; model.predict fonksiyonuna göre uyarlayın)
-        # Örnek: prediction = model.predict(image)
-        # prediction = {'label': 'standing', 'confidence': 0.87} gibi
-
-        # Modelinize göre aşağıdaki satırı değiştirin:
-        prediction = model.predict(image)  # Modelin predict fonksiyonu, image alıp dict döndürmeli
+        prediction = model.predict(image)  
 
         label = prediction.get("label", "unknown")
         confidence = prediction.get("confidence", 0.0)
 
-        # Görüntünün üzerine label ve confidence yaz
         text = f"{label}: {confidence:.2f}"
         font = cv2.FONT_HERSHEY_SIMPLEX
         font_scale = 1
         thickness = 2
-        color = (0, 255, 0)  # Yeşil
-
-        # Yazının sol üst köşe koordinatı
+        color = (0, 255, 0) 
         position = (20, 40)
 
         image = cv2.putText(image, text, position, font, font_scale, color, thickness, cv2.LINE_AA)
